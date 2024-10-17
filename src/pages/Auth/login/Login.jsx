@@ -47,8 +47,8 @@ export default function Login() {
         data, // Gửi thông tin đăng nhập
         { withCredentials: true } // Thêm tùy chọn này để gửi cookie
       );
-      localStorage.setItem("userId", response.data.userId);
-      toast.success(response.data.message);
+      localStorage.setItem("userId", response?.data?.userId);
+      toast.success(response?.data?.message);
 
       navigate("/workSpace");
       window.location.reload();
