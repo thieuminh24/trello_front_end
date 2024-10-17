@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import WorkSpace from "./pages/WorkSpace/WorkSpace";
 import loadBoards from "./redux/action/boards";
 import { intitialSocket } from "./redux/action/socket";
+import Welcome from "./components/Welcome/Welcome";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />}></Route>
+        <Route path="/" element={<Welcome />}></Route>
         <Route
           path="/board/:id"
           element={
