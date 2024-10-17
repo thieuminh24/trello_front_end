@@ -59,7 +59,7 @@ export default function Login() {
 
   const fetchVerify = async () => {
     try {
-      await axios.get("http://localhost:8017/v1/user/protected", {
+      await axios.get(`${API_ROOT}/v1/user/protected`, {
         withCredentials: true,
       });
       setIsLogin(true);
