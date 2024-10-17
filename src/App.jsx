@@ -38,10 +38,10 @@ function App() {
         <Route
           path="/workSpace"
           element={
-            <ProtectedPage>
-              {" "}
-              <WorkSpace />
-            </ProtectedPage>
+            // <ProtectedPage>
+            // {" "}
+            <WorkSpace />
+            // {/* </ProtectedPage> */}
           }
         ></Route>
         {/* <Route path="/" element={}></Route> */}

@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 export const intitialSocket = () => (dispatch) => {
-  const socket = io("http://localhost:8017");
+  const socket = io("https://trello-api-wulx.onrender.com");
   dispatch({
     type: "setSocket",
     payload: socket,
