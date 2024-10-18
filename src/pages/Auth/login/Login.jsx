@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { API_ROOT } from "../../../utils/constants";
 import { useDispatch } from "react-redux";
 import { loadUser } from "../../../redux/action/user";
+import "react-toastify/dist/ReactToastify.css";
 
 function Copyright() {
   return (
