@@ -212,6 +212,7 @@ const WorkSpace = () => {
   }, [loading, boards, getBoard]); // Phụ thuộc vào loading và boards
 
   useEffect(() => {
+      dispatch(loadUser());
     dispatch(loadBoards(userId));
   }, []);
 
