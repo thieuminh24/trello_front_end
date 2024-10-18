@@ -18,15 +18,9 @@ import { backGrImageData } from "../../apis/mock-data";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { createBoard } from "../../apis";
-<<<<<<< HEAD
 import { useDispatch } from "react-redux";
 import loadBoards from "../../redux/action/boards";
 
-=======
-import loadBoards from "../../redux/action/boards";
-import { loadUser } from "../../redux/action/user";
-import { useDispatch } from "react-redux";
->>>>>>> 6f1577379520387804a4db2d2063b3d44644ce01
 // import { Link, useNavigate } from "react-router-dom";
 
 const Attach = ({ setIsOpenModalCreateBoard, setGetBoard }) => {
@@ -206,23 +200,15 @@ const WorkSpace = () => {
   const [getBoard, setGetBoard] = useState([]); // Khởi tạo state
   const { boards, loading } = useSelector((state) => state.boards);
   const navigte = useNavigate();
-<<<<<<< HEAD
   const dispatch = useDispatch();
-=======
-    const dispatch = useDispatch();
->>>>>>> 6f1577379520387804a4db2d2063b3d44644ce01
+
   const [isOpenModalCreateBoard, setIsOpenModalCreateBoard] = useState(false);
 
   // Dùng useEffect để cập nhật getBoard khi loading là false
   useEffect(() => {
-<<<<<<< HEAD
-=======
-  
->>>>>>> 6f1577379520387804a4db2d2063b3d44644ce01
     if (loading === false) {
       setGetBoard(boards); // Cập nhật getBoard với dữ liệu từ Redux
     }
-    dispatch(loadBoards(userId));
   }, [loading, boards, getBoard]); // Phụ thuộc vào loading và boards
 
   useEffect(() => {
