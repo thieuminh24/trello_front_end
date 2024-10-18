@@ -205,11 +205,15 @@ const WorkSpace = () => {
   console.log(getBoard);
   // Dùng useEffect để cập nhật getBoard khi loading là false
   useEffect(() => {
-    dispatch(loadBoards(userId));
+  
     if (loading === false) {
       setGetBoard(boards); // Cập nhật getBoard với dữ liệu từ Redux
     }
   }, [loading, boards, getBoard]); // Phụ thuộc vào loading và boards
+
+  useEffect(() => {
+    dispatch(loadBoards(userId));
+  }, []);
 
   return (
     <>
