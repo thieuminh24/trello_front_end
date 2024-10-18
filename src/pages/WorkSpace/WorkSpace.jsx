@@ -20,6 +20,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { createBoard } from "../../apis";
 import { useDispatch } from "react-redux";
 import loadBoards from "../../redux/action/boards";
+
 // import { Link, useNavigate } from "react-router-dom";
 
 const Attach = ({ setIsOpenModalCreateBoard, setGetBoard }) => {
@@ -209,6 +210,10 @@ const WorkSpace = () => {
     }
     dispatch(loadBoards(userId));
   }, [loading, boards, getBoard]); // Phụ thuộc vào loading và boards
+
+  useEffect(() => {
+    dispatch(loadBoards(userId));
+  }, []);
 
   return (
     <>

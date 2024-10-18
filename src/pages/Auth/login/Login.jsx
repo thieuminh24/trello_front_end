@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API_ROOT } from "../../../utils/constants";
+import { useDispatch } from "react-redux";
+import { loadUser } from "../../../redux/action/user";
 
 function Copyright() {
   return (
@@ -33,6 +35,7 @@ function Copyright() {
 export default function Login() {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState();
+  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -49,7 +52,7 @@ export default function Login() {
       );
       localStorage.setItem("userId", response?.data?.userId);
       toast.success(response?.data?.message);
-
+      dispatch(loadUser());
       navigate("/workSpace");
       // window.location.reload();
     } catch (error) {

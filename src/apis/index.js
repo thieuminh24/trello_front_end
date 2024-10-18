@@ -23,7 +23,7 @@ export const fetchBoardDetailApi = async (boardId) => {
   return response.data;
 };
 
-export const fetchAllBoardApi = async (userId, limit, page) => {
+export const fetchAllBoardApi = async (userId, limit = 10, page = 1) => {
   const response = await axios.get(
     `${API_ROOT}/v1/boards/getAllBoard/${userId}?page=${page}&limit=${limit}`,
     { withCredentials: true }
