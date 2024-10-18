@@ -19,6 +19,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { createBoard } from "../../apis";
 import loadBoards from "../../redux/action/boards";
+import { loadUser } from "../../redux/action/user";
 import { useDispatch } from "react-redux";
 // import { Link, useNavigate } from "react-router-dom";
 
