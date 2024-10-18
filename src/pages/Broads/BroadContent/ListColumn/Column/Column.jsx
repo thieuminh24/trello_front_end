@@ -127,7 +127,7 @@ function Column({
           <Box>
             <Tooltip title="Edit Card">
               <ExpandMoreIcon
-                sx={{ color: "white", cursor: "pointer" }}
+                sx={{ color: "black", cursor: "pointer" }}
                 id="basic-button-workspace"
                 aria-controls={open ? "basic-menu-workspace" : undefined}
                 aria-haspopup="true"
