@@ -51,7 +51,7 @@ export default function Login() {
       toast.success(response?.data?.message);
 
       navigate("/workSpace");
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       toast.error(error.response.data.message);
     }
