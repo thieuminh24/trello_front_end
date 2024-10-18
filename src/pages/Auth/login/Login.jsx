@@ -73,7 +73,7 @@ export default function Login() {
   }, []);
 
   if (isLogin) {
-    return navigate("/");
+    return navigate("/workSpace");
   }
 
   return (
