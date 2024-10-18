@@ -100,9 +100,6 @@ function Profiles() {
         <MenuItem onClick={() => navigate("/profile")}>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
