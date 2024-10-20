@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { API_ROOT } from "../../../utils/constants";
+import Typography from "@mui/material/Typography";
 
 function Profiles() {
   const navigate = useNavigate();
@@ -98,7 +99,19 @@ function Profiles() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={() => navigate("/profile")}>
-          <Avatar /> Profile
+          <Avatar src={user?.avatar} />
+          <Box>
+            <Typography
+              variant="body3"
+              color="initial"
+              sx={{ fontWeight: "500" }}
+            >
+              {`${user?.firstName} ${user?.lastName} `}
+            </Typography>
+            <Typography variant="body1" color="initial">
+              {user?.email}
+            </Typography>
+          </Box>
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

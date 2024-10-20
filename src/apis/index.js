@@ -9,6 +9,14 @@ export const fetchUserApi = async () => {
   return response.data;
 };
 
+//update user
+export const updateUserApi = async (data) => {
+  const response = await axios.put(`${API_ROOT}/v1/user/update`, data, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
 // Tạo board
 export const createBoard = async (data) => {
   const response = await axios.post(`${API_ROOT}/v1/boards`, data, {
@@ -17,7 +25,7 @@ export const createBoard = async (data) => {
   return response.data;
 };
 
-// Lấy ra board
+// Lấy ra chi tiết board
 export const fetchBoardDetailApi = async (boardId) => {
   const response = await axios.get(`${API_ROOT}/v1/boards/${boardId}`);
   return response.data;
@@ -47,13 +55,21 @@ export const fetchCardDetail = async (cardId) => {
 };
 
 export const updateCard = async (cardId, cardData) => {
-  const response = await axios.put(`${API_ROOT}/v1/cards/${cardId}`, cardData, {
-    withCredentials: true,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-  return response.data;
+  try {
+    const response = await axios.put(
+      `${API_ROOT}/v1/cards/${cardId}`,
+      cardData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error.res;
+  }
 };
 
 // thêm một cột mới

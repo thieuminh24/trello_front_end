@@ -1,11 +1,12 @@
 // import "./styles.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import SettingsCard from "../../components/SettingsCard/SettingsCard";
 import { useSelector } from "react-redux";
+import PopupSettingCard from "../../components/SettingsCard/PopupEditInfo";
 
 // STYLE & THEME
 const theme = createTheme();
@@ -14,11 +15,34 @@ const theme = createTheme();
 export default function Profile() {
   const { user, loading } = useSelector((state) => state.user);
 
-  const fullName = `${user.firstName} ${user.lastName}`;
+  const [openPopUpInfo, setOpenPopUpInfo] = useState(false);
+
+  const handleOpenPopUpEidtInfo = () => {
+    setOpenPopUpInfo(true);
+  };
+
+  // const changeField = (event) => {
+  //   setUser({ ...user, [event.target.name]: event.target.value });
+  // };
+  // GENDER SELECT STATES
+  const genderSelect = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+  ];
+
+  const fullName = `${user?.firstName} ${user?.lastName}`;
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
+        {openPopUpInfo && (
+          <PopupSettingCard
+            user={user}
+            genderSelect={genderSelect}
+            setOpenPopUpInfo={setOpenPopUpInfo}
+          />
+        )}
+
         {/* BACKGROUND */}
         <Grid container direction="column" sx={{ overflowX: "hidden" }}>
           <Grid item xs={12} md={6}>
@@ -54,12 +78,8 @@ export default function Profile() {
             {/* SETTINGS CARD */}
             <Grid item md={9}>
               <SettingsCard
-                // expose={(v) => setText(v)}
-                firstName={user.firstName}
-                lastName={user.lastName}
-                phone={user.phone}
-                email={user.email}
-                gender={user?.gender}
+                handleOpenPopUpEidtInfo={handleOpenPopUpEidtInfo}
+                user={user}
               ></SettingsCard>
             </Grid>
           </Grid>

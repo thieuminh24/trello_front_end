@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
+import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 import {
@@ -25,7 +26,7 @@ function ListColumn({
 
   const addNewColumn = async () => {
     if (!newColumnTitle) {
-      toast.error("Please enter Column Title");
+      toast.error("Please enter Column Title", { theme: "colored" });
       return;
     }
 

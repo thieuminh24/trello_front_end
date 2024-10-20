@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
@@ -18,12 +18,18 @@ import Button from "@mui/material/Button";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 import ListCard from "./ListCards/ListCard";
 import { useConfirm } from "material-ui-confirm";
-
+import EditIcon from "@mui/icons-material/Edit";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
+import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import {
+  updateBoardDetailsApi,
+  updateColumnDetailsApi,
+} from "../../../../../apis";
+import { FaLeaf } from "react-icons/fa";
 
 function Column({
   column,
@@ -50,6 +56,7 @@ function Column({
   };
   // Drag and drop
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const inputRef = useRef(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -61,10 +68,12 @@ function Column({
 
   const [openNewCardForm, setopenNewCardForm] = useState(false);
   const [newCardTitle, setnewCardTitle] = useState("");
+  const [columnTitle, setColumnTitle] = useState(column.title);
+  const [isOpenEditTitleColumn, setIsOpenEditTitleColumn] = useState(false);
   const toggleOpenNewCardForm = () => setopenNewCardForm(!openNewCardForm);
   const addNewCard = async () => {
     if (!newCardTitle) {
-      toast.error("Please enter Card title");
+      toast.error("Please enter Card title", { theme: "colored" });
       return;
     }
 
@@ -79,6 +88,13 @@ function Column({
 
   // Xử lý xóa một column và card bên trong nó
   const confirmDeleteColumn = useConfirm();
+
+  const handleChangeColumnTitle = async (columnId) => {
+    await updateColumnDetailsApi(columnId, { title: columnTitle });
+
+    setIsOpenEditTitleColumn(false);
+  };
+
   const handleDeleteColumn = () => {
     confirmDeleteColumn({
       title: "Delete Column",
@@ -88,6 +104,11 @@ function Column({
       cancellationText: "Cancel",
       dialogProps: { maxWidth: "xs" },
       allowClose: false,
+      confirmationButtonProps: {
+        sx: {
+          color: "red", // Chuyển chữ thành màu đỏ
+        },
+      },
     })
       .then(() => {
         deleteColumnDetails(column._id);
@@ -121,9 +142,28 @@ function Column({
             justifyContent: "space-between",
           }}
         >
-          <Typography sx={{ fontWeight: "bold", cursor: "pointer" }}>
-            {column.title}
-          </Typography>
+          {isOpenEditTitleColumn ? (
+            <TextField
+              ref={inputRef}
+              sx={{
+                "& .MuiInputBase-root input": {
+                  padding: "5px",
+                  backgroundColor: "#EAE4DD",
+                },
+              }}
+              value={columnTitle}
+              onChange={(e) => setColumnTitle(e.target.value)}
+              onBlur={() => handleChangeColumnTitle(column._id)}
+            />
+          ) : (
+            <Typography
+              onClick={() => setIsOpenEditTitleColumn(true)}
+              sx={{ fontWeight: "bold", cursor: "pointer" }}
+            >
+              {columnTitle}
+            </Typography>
+          )}
+
           <Box>
             <Tooltip title="Edit Card">
               <ExpandMoreIcon
@@ -159,11 +199,18 @@ function Column({
                 </ListItemIcon>
                 <ListItemText>Add new card</ListItemText>
               </MenuItem>
-              <MenuItem>
+              <MenuItem
+                onClick={() => {
+                  if (inputRef.current) {
+                    inputRef.current.focus(); // Focus vào TextField khi button được nhấn
+                  }
+                  setIsOpenEditTitleColumn(true);
+                }}
+              >
                 <ListItemIcon>
-                  <ContentCut fontSize="small" />
+                  <EditIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Cut</ListItemText>
+                <ListItemText>Edit Column</ListItemText>
               </MenuItem>
               <MenuItem>
                 <ListItemIcon>
@@ -171,12 +218,7 @@ function Column({
                 </ListItemIcon>
                 <ListItemText>Copy</ListItemText>
               </MenuItem>
-              <MenuItem>
-                <ListItemIcon>
-                  <ContentPaste fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Paste</ListItemText>
-              </MenuItem>
+
               <Divider />
 
               <MenuItem
@@ -195,13 +237,6 @@ function Column({
                   />
                 </ListItemIcon>
                 <ListItemText>Remove this column</ListItemText>
-              </MenuItem>
-
-              <MenuItem>
-                <ListItemIcon>
-                  <Cloud fontSize="small" />
-                </ListItemIcon>
-                <ListItemText>Archive this column</ListItemText>
               </MenuItem>
             </Menu>
           </Box>

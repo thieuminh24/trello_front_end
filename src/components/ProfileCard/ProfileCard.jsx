@@ -6,6 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
+import { useSelector } from "react-redux";
 
 // STYLES
 const styles = {
@@ -22,6 +23,8 @@ const styles = {
 
 //APP
 export default function ProfileCard(props) {
+  const { user, loading } = useSelector((state) => state.user);
+  console.lg;
   return (
     <Card variant="outlined">
       <Grid
@@ -51,7 +54,7 @@ export default function ProfileCard(props) {
           >
             <Avatar
               sx={{ width: 100, height: 100, mb: 1.5 }}
-              src={props.user.avatar}
+              src={props?.user?.avatar}
             ></Avatar>
           </Badge>
 
@@ -64,19 +67,24 @@ export default function ProfileCard(props) {
         {/* DETAILS */}
         <Grid container>
           <Grid item xs={6}>
-            <Typography style={styles.details}>Board</Typography>
-            <Typography style={styles.details}>Card</Typography>
+            <Typography style={styles.details}>Department</Typography>
+            <Typography style={styles.details}>Organization</Typography>
           </Grid>
           {/* VALUES */}
           <Grid item xs={6} sx={{ textAlign: "end" }}>
-            <Typography style={styles.value}>1</Typography>
-            <Typography style={styles.value}>2</Typography>
+            <Typography style={styles.value}>
+              {user?.department ? user?.department : "Trống"}
+            </Typography>
+            <Typography style={styles.value}>
+              {user?.organization ? user?.organization : "Trống"}
+            </Typography>
           </Grid>
         </Grid>
 
         {/* BUTTON */}
         <Grid item style={styles.details} sx={{ width: "100%" }}>
           <Button
+            type="submit"
             variant="contained"
             color="secondary"
             sx={{ width: "99%", p: 1, my: 2 }}

@@ -52,7 +52,7 @@ export default function Login() {
         { withCredentials: true } // Thêm tùy chọn này để gửi cookie
       );
       localStorage.setItem("userId", response?.data?.userId);
-      toast.success(response?.data?.message + "hehehe", {
+      toast.success(response?.data?.message, {
         theme: "colored",
       });
       dispatch(loadUser());

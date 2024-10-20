@@ -1,22 +1,21 @@
 // IMPORTS
-import React, { useState } from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
-import InputAdornment from "@mui/material/InputAdornment";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
-import CardContent from "@mui/material/CardContent";
 
-import { Grid, Box, IconButton, Typography } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import { LuPhoneCall } from "react-icons/lu";
+import { Grid, Box, Typography } from "@mui/material";
+import { IoPersonOutline } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import CustomInput from "./CustomInput";
-import { TextFields, Visibility, VisibilityOff } from "@mui/icons-material";
+import { BsGenderAmbiguous } from "react-icons/bs";
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import { MdWorkOutline } from "react-icons/md";
 
 // APP
-export default function SettingsCard(props) {
+export default function SettingsCard({ user, handleOpenPopUpEidtInfo }) {
   // TAB STATES
   const [value, setValue] = useState("1");
 
@@ -24,49 +23,6 @@ export default function SettingsCard(props) {
     setValue(newValue);
   };
 
-  // GENDER SELECT STATES
-  const genderSelect = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-  ];
-
-  // FORM STATES
-  const [user, setUser] = useState({
-    firstName: props.firstName,
-    lastName: props.lastName,
-    gender: props.gender,
-    email: props.email,
-    phone: props.phone,
-  });
-
-  const changeField = (event) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
-
-  // BUTTON STATES
-  const [edit, update] = useState({
-    required: true,
-    disabled: true,
-    isEdit: true,
-  });
-
-  // EDIT -> UPDATE
-  const changeButton = (event) => {
-    event.preventDefault();
-    user.showPassword = false;
-    edit.disabled = !edit.disabled;
-    edit.isEdit = !edit.isEdit;
-    update({ ...edit });
-    console.log("user: ", user);
-  };
-
-  // TOGGLE PASSWORD VISIBILITY
-  const handlePassword = () => {
-    user.showPassword = !user.showPassword;
-    setUser({ ...user });
-  };
-
-  // RETURN
   return (
     <Card variant="outlined" sx={{ height: "100%", width: "100%" }}>
       {/* TABS */}
@@ -86,159 +42,150 @@ export default function SettingsCard(props) {
       {/* MAIN CONTENT CONTAINER */}
       {value === "1" ? (
         <>
-          <form>
-            <CardContent
-              sx={{
-                p: 3,
-                maxHeight: { md: "40vh" },
-                textAlign: { xs: "center", md: "start" },
-              }}
-            >
-              {/* FIELDS */}
-              <FormControl fullWidth>
-                <Grid
-                  container
-                  direction={{ xs: "column", md: "row" }}
-                  columnSpacing={5}
-                  rowSpacing={3}
-                >
-                  {/* ROW 1: FIRST NAME */}
-                  <Grid component="form" item xs={6}>
-                    <CustomInput
-                      id="firstName"
-                      name="firstName"
-                      value={user.firstName}
-                      onChange={changeField}
-                      title="First Name"
-                      dis={edit.disabled}
-                      req={edit.required}
-                    />
-                  </Grid>
-
-                  {/* ROW 1: LAST NAME */}
-                  <Grid component="form" item xs={6}>
-                    <CustomInput
-                      id="lastName"
-                      name="lastName"
-                      value={user.lastName}
-                      onChange={changeField}
-                      title="Last Name"
-                      dis={edit.disabled}
-                      req={edit.required}
-                    />
-                  </Grid>
-
-                  {/* ROW 2: GENDER */}
-                  <Grid item xs={6}>
-                    <CustomInput
-                      select
-                      id="gender"
-                      name="gender"
-                      value={user.gender}
-                      onChange={changeField}
-                      title="Gender"
-                      dis={edit.disabled}
-                      req={edit.required}
-                      content={genderSelect.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    />
-                  </Grid>
-
-                  {/* ROW 3: PHONE */}
-                  <Grid item xs={6}>
-                    <CustomInput
-                      id="phone"
-                      name="phone"
-                      value={user.phone}
-                      onChange={changeField}
-                      title="Phone Number"
-                      dis={edit.disabled}
-                      req={edit.required}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">84+</InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-
-                  {/* ROW 3: EMAIL */}
-                  <Grid item xs={6}>
-                    <CustomInput
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={user.email}
-                      onChange={changeField}
-                      title="Email Address"
-                      dis={edit.disabled}
-                      req={edit.required}
-                    />
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <CustomInput
-                      // id="firstName"
-                      name="JobTitle"
-                      // value={user.firstName}
-                      onChange={changeField}
-                      title="Job Title"
-                      dis={edit.disabled}
-                      req={edit.required}
-                    />
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <CustomInput
-                      // id="firstName"
-                      name="Department"
-                      // value={user.firstName}
-                      onChange={changeField}
-                      title="Department"
-                      dis={edit.disabled}
-                      req={edit.required}
-                    />
-                  </Grid>
-
-                  <Grid item xs={6}>
-                    <CustomInput
-                      // id="firstName"
-                      name="Organization"
-                      // value={user.firstName}
-                      onChange={changeField}
-                      title="Organization"
-                      dis={edit.disabled}
-                      req={edit.required}
-                    />
-                  </Grid>
-
-                  {/* ROW 4: PASSWORD */}
-
-                  {/* BUTTON */}
-                </Grid>
-              </FormControl>
-            </CardContent>
-          </form>
           <Grid
             container
-            justifyContent={{ xs: "center", md: "flex-end" }}
-            item
-            xs={6}
+            spacing={8}
+            sx={{ position: "relative", top: "56px" }}
           >
-            <Button
-              sx={{ p: "1rem 2rem", my: 2, height: "3rem" }}
-              component="button"
-              size="large"
-              variant="contained"
-              color="secondary"
-              onClick={changeButton}
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              {edit.isEdit === false ? "UPDATE" : "EDIT"}
-            </Button>
+              <IoPersonOutline size={25} />
+              <Typography
+                variant="h6"
+                color="initial"
+                sx={{ fontWeight: "500" }}
+              >
+                Full Name
+              </Typography>
+              <Typography
+                variant="body1"
+                color="initial"
+              >{`${user?.firstName} ${user?.lastName}`}</Typography>
+            </Grid>
+
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <BsGenderAmbiguous size={25} />
+              <Typography
+                variant="h6"
+                color="initial"
+                sx={{ fontWeight: "500" }}
+              >
+                Gender
+              </Typography>
+              <Typography variant="body1" color="initial">
+                {user?.gender ? `${user?.gender}` : "Trống"}
+              </Typography>
+            </Grid>
+
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <MdOutlineAlternateEmail size={25} />
+              <Typography
+                variant="h6"
+                color="initial"
+                sx={{ fontWeight: "500" }}
+              >
+                Email Address
+              </Typography>
+              <Typography
+                variant="body1"
+                color="initial"
+              >{`${user?.email}`}</Typography>
+            </Grid>
+
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <LuPhoneCall size={25} />
+              <Typography
+                variant="h6"
+                color="initial"
+                sx={{ fontWeight: "500" }}
+              >
+                Phone Number
+              </Typography>
+              <Typography variant="body1" color="initial">
+                {user?.phone ? `${user?.phone}` : "Trống"}
+              </Typography>
+            </Grid>
+
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <MdWorkOutline size={25} />
+              <Typography
+                variant="h6"
+                color="initial"
+                sx={{ fontWeight: "500" }}
+              >
+                Job Title
+              </Typography>
+              <Typography variant="body1" color="initial">
+                {user?.jobTitle ? `${user?.jobTitle}` : "Trống"}
+              </Typography>
+            </Grid>
           </Grid>
+          <Button
+            sx={{
+              p: "1rem 2rem",
+              my: 2,
+              height: "3rem",
+              position: "absolute",
+              right: "52px",
+              bottom: "-77px",
+            }}
+            component="button"
+            size="large"
+            variant="contained"
+            color="secondary"
+            onClick={handleOpenPopUpEidtInfo}
+          >
+            Edit
+          </Button>
         </>
       ) : (
         <Box
@@ -282,7 +229,6 @@ export default function SettingsCard(props) {
             size="large"
             variant="contained"
             color="secondary"
-            onClick={changeButton}
           >
             Save
           </Button>

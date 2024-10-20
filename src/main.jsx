@@ -8,10 +8,18 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/s
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ConfirmProvider } from "material-ui-confirm";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
 
 import { Provider } from "react-redux";
 import Store from "./redux/store.js";
 
+const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
 
@@ -25,8 +33,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         }}
       >
         <CssBaseline />
-        
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
         <ToastContainer />
       </ConfirmProvider>
     </CssVarsProvider>

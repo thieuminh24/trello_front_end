@@ -20,10 +20,11 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { createBoard } from "../../apis";
 import { useDispatch } from "react-redux";
 import loadBoards from "../../redux/action/boards";
+import NestedList from "./NestedNav/NestedNav";
 
 // import { Link, useNavigate } from "react-router-dom";
 
-const Attach = ({ setIsOpenModalCreateBoard, setGetBoard }) => {
+const CreateBoard = ({ setIsOpenModalCreateBoard, setGetBoard }) => {
   // const [inputValue, setInputValue] = useState('');
   // const [error, setError] = useState(false);
   // const [helperText, setHelperText] = useState('');
@@ -222,7 +223,7 @@ const WorkSpace = () => {
         {" "}
         <Grid container spacing={0}>
           <Grid item xs={4}>
-            <Box display="" mx="" my="" sx="">
+            {/* <Box display="" mx="" my="" sx="">
               <Button
                 sx={{
                   display: "flex",
@@ -267,7 +268,8 @@ const WorkSpace = () => {
               >
                 Home
               </Button>
-            </Box>
+            </Box> */}
+            <NestedList />
           </Grid>
 
           <Grid item xs={8}>
@@ -363,6 +365,7 @@ const WorkSpace = () => {
               >
                 YOUR WORKSPACES
               </Typography>
+
               <Grid container spacing={0}>
                 {getBoard?.Myboard?.map((board) => (
                   <Grid
@@ -451,7 +454,7 @@ const WorkSpace = () => {
                         position: "sticky",
                       }}
                     >
-                      <Attach
+                      <CreateBoard
                         setGetBoard={setGetBoard}
                         setIsOpenModalCreateBoard={setIsOpenModalCreateBoard}
                       />

@@ -78,7 +78,7 @@ function Card({ card, openDetailCard, coverValues }) {
         >
           {card.title}
         </Typography>
-        {card?.files >= 1 || card?.description ? (
+        {card?.files?.length > 0 || card?.description ? (
           <Box display="flex" alignItems="center" gap={2}>
             <Box>
               <GrTextAlignFull size={15} />
@@ -86,7 +86,7 @@ function Card({ card, openDetailCard, coverValues }) {
             <Box display="flex" gap={0.5}>
               <GrAttachment size={15} />
               <Typography variant="body1" color="initial">
-                {card?.files.length}
+                {card?.files?.length}
               </Typography>
             </Box>
           </Box>
