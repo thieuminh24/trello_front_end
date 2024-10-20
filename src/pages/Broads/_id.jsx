@@ -275,6 +275,7 @@ function Broad() {
     setCoverValues("");
     setCardId(cardId);
     setIsOpenModal(true);
+    setIsOpenQuill(false);
     const response = await fetchCardDetail(cardId);
     // console.log("response", response);
     const dataComments = await fetchAllComment(cardId);
