@@ -697,7 +697,7 @@ function Broad() {
                       ) : (
                         <TextField
                           variant="outlined"
-                          fullwidth
+                          fullWidth
                           value={description?.replace(/<[^>]+>/g, "")} // Loại bỏ HTML tag để hiển thị text thuần
                           onFocus={() => {
                             setIsOpenQuill(true);
