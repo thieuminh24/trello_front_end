@@ -42,7 +42,7 @@ export default function SignUp() {
     };
     const response = await axios.post(`${API_ROOT}/v1/user/register`, data);
     toast.success("Đăng kí thành công.Vui lòng đăng nhập để sử dụng");
-    naviagte("/login");
+
     localStorage.setItem("token", response.data.token);
   };
 
