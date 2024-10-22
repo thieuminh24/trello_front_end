@@ -12,6 +12,7 @@ import WorkSpace from "./pages/WorkSpace/WorkSpace";
 import loadBoards from "./redux/action/boards";
 import { intitialSocket } from "./redux/action/socket";
 import Welcome from "./components/Welcome/Welcome";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
             </ProtectedPage>
           }
         ></Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {/* <Broad></Broad> */}
     </BrowserRouter>
