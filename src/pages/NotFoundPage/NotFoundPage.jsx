@@ -1,6 +1,8 @@
 import { Box, Typography, Button, Container } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function NotFoundPage() {
+  const naviagte = useNavigate();
   return (
     <Box
       component="section"
@@ -48,6 +50,7 @@ function NotFoundPage() {
           variant="contained"
           color="primary"
           href="#"
+          onClick={() => naviagte("/workSpace")}
           sx={{
             textTransform: "none",
             my: 4,
