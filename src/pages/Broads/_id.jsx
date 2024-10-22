@@ -159,21 +159,17 @@ function Broad() {
   const [isHiddenTextFieldDescription, setIsHiddenTextFieldDescription] =
     useState(false);
   const [isOpenQuill, setIsOpenQuill] = useState(false); // State để quản lý focus
-
   const [comment, setComment] = useState("");
   const [dataComments, setDataComments] = useState([]);
   const [isFocusedActivity, setIsFocusedActivity] = useState();
-
   const [isOpenChooseCover, setIsOpenChooseCover] = useState(false);
   const [isOpenChooseAttach, setIsOpenChooseAttach] = useState(false);
-  // const [covers, setCover] = useState([]);
   const [coverValues, setCoverValues] = useState();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenNotification, setIsOpenNotification] = useState(false);
   const [messaageNotifiction, setMessaageNotifiction] = useState("");
   const userId = localStorage.getItem("userId");
   const [boardIdInvite, setBoardIdInvite] = useState();
-
   const [cardId, setCardId] = useState(null);
 
   const { id } = useParams();
@@ -442,21 +438,6 @@ function Broad() {
 
   if (!board) {
     return (
-      // <Box
-      //   sx={{
-      //     display: "flex",
-      //     alignItems: "center",
-      //     justifyContent: "center",
-      //     gap: 2,
-      //     width: "100vw",
-      //     height: "100vh",
-      //   }}
-      // >
-      //   <CircularProgress />
-      //   <Typography variant="body1" color="initial">
-      //     Loading board ...
-      //   </Typography>
-      // </Box>
       <Box
         sx={{
           display: "flex",

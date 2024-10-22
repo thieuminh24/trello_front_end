@@ -45,8 +45,6 @@ function AppBar() {
     debouncedFetchResults(value);
   };
 
-  console.log(results);
-
   return (
     <Box
       px={2}
