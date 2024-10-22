@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_ROOT } from "../../../utils/constants";
 
 function Copyright() {
@@ -30,6 +30,7 @@ function Copyright() {
 }
 
 export default function SignUp() {
+  const naviagte = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -40,7 +41,8 @@ export default function SignUp() {
       password: formData.get("password"),
     };
     const response = await axios.post(`${API_ROOT}/v1/user/register`, data);
-    toast.success(response.data.message);
+    toast.success("Đăng kí thành công.Vui lòng đăng nhập để sử dụng");
+    naviagte("/login");
     localStorage.setItem("token", response.data.token);
   };
 
