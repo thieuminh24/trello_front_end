@@ -19,6 +19,7 @@ import { API_ROOT } from "../../../utils/constants";
 import { useDispatch } from "react-redux";
 import { loadUser } from "../../../redux/action/user";
 import "react-toastify/dist/ReactToastify.css";
+import { Alert, AlertTitle, List, ListItem } from "@mui/material";
 
 function Copyright() {
   return (
@@ -84,6 +85,23 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
+            <Alert
+        severity="info"
+        variant="filled"
+        sx={{ mb: 2, position: "absolute", left: "12px" }}
+      >
+        <AlertTitle>
+          Nếu không đăng kí được tài khoản anh chị hãy dùng tài khoản này
+        </AlertTitle>
+        <List sx={{ pl: 2, listStyleType: "disc" }}>
+          <ListItem sx={{ display: "list-item" }}>
+            Tài khoản : memoriesmusic2421@gmail.com
+          </ListItem>
+          <ListItem sx={{ display: "list-item" }}>
+            Mật khẩu: Minh242203
+          </ListItem>
+        </List>
+      </Alert>
       <CssBaseline />
       <Box
         sx={{
