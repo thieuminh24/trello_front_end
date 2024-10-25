@@ -30,6 +30,7 @@ import {
   updateColumnDetailsApi,
 } from "../../../../../apis";
 import { FaLeaf } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function Column({
   column,
@@ -47,13 +48,6 @@ function Column({
     isDragging,
   } = useSortable({ id: column._id, data: { ...column } });
 
-  const dndKitColumnStyle = {
-    // touchAction: "none",
-    transform: CSS.Translate.toString(transform),
-    transition,
-    height: "100%",
-    opacity: isDragging ? 0.5 : undefined,
-  };
   // Drag and drop
   const [anchorEl, setAnchorEl] = React.useState(null);
   const inputRef = useRef(null);
@@ -70,6 +64,28 @@ function Column({
   const [newCardTitle, setnewCardTitle] = useState("");
   const [columnTitle, setColumnTitle] = useState(column.title);
   const [isOpenEditTitleColumn, setIsOpenEditTitleColumn] = useState(false);
+  const [isColumnDragging, setIsColumnDragging] = useState(false);
+
+  const { socket } = useSelector((state) => state.socket);
+
+  if (socket) {
+    socket.on("itemIsDragging", (idColumns) => {
+      if (idColumns === column._id) {
+        setIsColumnDragging(true);
+      } else {
+        setIsColumnDragging(false);
+      }
+    });
+  }
+
+  const dndKitColumnStyle = {
+    // touchAction: "none",
+    transform: CSS.Translate.toString(transform),
+    transition,
+    height: "100%",
+    opacity: isDragging ? 0.5 : undefined,
+  };
+
   const toggleOpenNewCardForm = () => setopenNewCardForm(!openNewCardForm);
   const addNewCard = async () => {
     if (!newCardTitle) {
@@ -130,6 +146,7 @@ function Column({
           height: "fit-content",
           maxHeight: (theme) =>
             `calc(${theme.trello.broadContentHeight} - ${theme.spacing(5)})`,
+          border: isColumnDragging && "4px solid red",
         }}
       >
         {/* Header column header*/}

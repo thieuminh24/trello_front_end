@@ -29,13 +29,6 @@ function Card({ card, openDetailCard, coverValues }) {
     border: isDragging ? "1px solid #2ecc71" : undefined,
   };
 
-  // const shouldShowCardAction = () => {
-  //   return (
-  //     !!card?.memberIds?.length ||
-  //     !!card?.comments?.length ||
-  //     !!card?.attachments?.length
-  //   );
-  // };
   return (
     <MuiCard
       ref={setNodeRef}

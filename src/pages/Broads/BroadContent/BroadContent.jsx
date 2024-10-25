@@ -16,6 +16,7 @@ import Card from "./ListColumn/Column/ListCards/Card/Card";
 import { cloneDeep, isEmpty } from "lodash";
 import { generatePlaceholderCard } from "../../../utils/formatter";
 import { MouseSensor, TouchSensor } from "../../../customLibrary/DndKitSensors";
+import { useSelector } from "react-redux";
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: "ACTIVE_DRAG_ITEM_TYPE_COLUMN",
@@ -42,7 +43,9 @@ function BroadContent({
   const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] =
     useState(null);
   const [orderedColumns, setOrderedColumns] = useState([]);
-  const [isOpenDetailCard, SetIsOpenDetailCard] = useState(false);
+  // const [isOpenDetailCard, SetIsOpenDetailCard] = useState(false);
+
+  const { socket } = useSelector((state) => state.socket);
 
   // -----------------------Xử lý cảm biến-------------------------------
   const mouseSensor = useSensor(MouseSensor, {
@@ -212,6 +215,9 @@ function BroadContent({
   // ------------------Bắt sự kiện khi Drag BẮT ĐẦU-----------------------------
   const handleDragStart = (event) => {
     // ------------------ Khi bắt đầu kéo thì sẽ setState để biết: Đang kéo CARD HAY COLUMN, ID, DATA (ACTIVE) ------------------------
+    if (socket) {
+      socket.emit("itemIsDragging", event.active.id);
+    }
 
     setActiveDargItemId(event.active.id);
     setActiveDargItemType(
@@ -284,7 +290,7 @@ function BroadContent({
 
       if (!activeColumn || !overColumn) return; //nếu không tôn tại 1 trong 2 column này thì sẽ return luôn để tránh bị cash ứng dụng
 
-      //Kéo thả card 2 cột khác nhau
+      //---------------------------------Kéo thả card 2 cột khác nhau------------------------------------
       if (oldColumnWhenDraggingCard._id !== overColumn._id) {
         const triggerFrom = "handleDragEnd";
         moveCardBetweenDifferentColumns(
@@ -324,6 +330,7 @@ function BroadContent({
 
           targetColumn.cards = dndOrderedCard;
           targetColumn.cardOrderIds = dndOrderedCardIds;
+          // socket.emit("addNewCard", nextColumns);
           return nextColumns;
         });
 
@@ -358,6 +365,10 @@ function BroadContent({
         // Vẫn gọi update State ở đây để tránh delay hoặc Flickering giao diện lúc kéo thả cần phải chời gọi API
         setOrderedColumns(dndOrderedColumns);
         moveColumns(dndOrderedColumns);
+
+        if (socket) {
+          socket.emit("newColumnsAfterSort", dndOrderedColumns);
+        }
       }
     }
 
@@ -367,6 +378,16 @@ function BroadContent({
     setActiveDargItemId(null);
     setOldColumnWhenDraggingCard(null);
   };
+
+  socket.on("newColumnsAfterSort", (data) => {
+    console.log(data);
+    setOrderedColumns(data);
+    moveColumns(data);
+  });
+
+  socket.on("addNewCard", (data) => {
+    socket.broadcast.emit("addNewCard", data);
+  });
 
   return (
     <DndContext

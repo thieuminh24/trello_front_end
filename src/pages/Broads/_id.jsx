@@ -320,7 +320,14 @@ function Broad() {
       columnOrderIds: newBoard.columnOrderIds,
     });
     setBoard(newBoard);
+    socket.emit("addNewColumn", newBoard);
   };
+
+  if (socket) {
+    socket.on("addNewColumn", (data) => {
+      setBoard(data);
+    });
+  }
 
   //Hàm này có nhiệm vụ gọi API khi kéo thả columns xong (Gọi API update lại đối tượng board vì khi kéo thả cột thì key columnsOrderIds sẽ bị thay đổi )
   const moveColumns = async (dndOrderedColumns) => {
@@ -400,7 +407,6 @@ function Broad() {
     });
   };
 
-  //làm hiệu ứng loading
   const deleteColumnDetails = (columnId) => {
     // update dữ liệu state board
     const newBoard = { ...board };
@@ -409,6 +415,7 @@ function Broad() {
       (id) => id !== columnId
     );
     setBoard(newBoard);
+    socket.emit("deleteColumn", newBoard);
     //Gọi api xóa column
     deleteColumnDetailsApi(columnId)
       .then((res) => {
@@ -416,6 +423,12 @@ function Broad() {
       })
       .catch();
   };
+
+  if (socket) {
+    socket.on("deleteColumn", (data) => {
+      setBoard(data);
+    });
+  }
 
   useEffect(() => {
     fetchBoardDetailApi(id).then((board) => {
